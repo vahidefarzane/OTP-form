@@ -1,16 +1,13 @@
 <script setup>
 import { ref, reactive } from 'vue'
 
-const currentNumeber = ref('')
 const props = defineProps({
   default: String,
-
   digitCount: {
     type: Number,
     required: true
   }
 })
-
 const digits = reactive([])
 
 if (props.default && props.default.length === props.digitCount) {
@@ -27,6 +24,10 @@ const handleKeyDown = function (event, index) {
   if (event.key !== 'Tab' && event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') {
     event.preventDefault()
   }
+  //   for (const property in digits) {
+  //     if (digits[property] !== null) {
+  //     }
+  //   }
 
   if (event.key === 'Backspace') {
     digits[index] = null
@@ -34,9 +35,7 @@ const handleKeyDown = function (event, index) {
     if (index > 0) {
       otpCont.value.children[index - 1].focus()
     }
-    if (index === 0) {
-      otpCont.value.children[0].focus()
-    }
+
     return
   }
 
@@ -59,7 +58,6 @@ const handleKeyDown = function (event, index) {
       maxlength="1"
       type="number"
       class="input"
-      :ref="currentNumeber"
       required
       @keydown="handleKeyDown($event, ind)"
     />

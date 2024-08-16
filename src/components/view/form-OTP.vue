@@ -1,5 +1,7 @@
 <script setup>
 import BaseInput from '../common/base-input.vue'
+
+setInterval(() => {}, 1000)
 </script>
 <template>
   <div class="container">
