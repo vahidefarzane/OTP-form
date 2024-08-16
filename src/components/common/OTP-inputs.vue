@@ -1,5 +1,6 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, defineModel } from 'vue'
+const isActiveBtn = defineModel()
 
 const props = defineProps({
   default: String,
@@ -9,6 +10,7 @@ const props = defineProps({
   }
 })
 const digits = reactive([])
+const OTPCode = ref([])
 
 if (props.default && props.default.length === props.digitCount) {
   for (let i = 0; i < props.digitCount; i++) {
@@ -24,10 +26,6 @@ const handleKeyDown = function (event, index) {
   if (event.key !== 'Tab' && event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') {
     event.preventDefault()
   }
-  //   for (const property in digits) {
-  //     if (digits[property] !== null) {
-  //     }
-  //   }
 
   if (event.key === 'Backspace') {
     digits[index] = null
@@ -45,6 +43,11 @@ const handleKeyDown = function (event, index) {
     if (index != props.digitCount - 1) {
       otpCont.value.children[index + 1].focus()
     }
+  }
+
+  OTPCode.value.push(digits[index])
+  if (OTPCode.value.length === 6) {
+    isActiveBtn.value = true
   }
 }
 </script>

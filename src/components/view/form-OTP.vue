@@ -1,7 +1,18 @@
 <script setup>
-import BaseInput from '../common/base-input.vue'
+import { computed, ref } from 'vue'
+// import BaseButton from '../common/base-button.vue'
+import OTPInputs from '../common/OTP-inputs.vue'
+import AppTimer from './app-timer.vue'
 
-setInterval(() => {}, 1000)
+const isActive = ref(false)
+const isShowingSppiner = ref(false)
+
+const submitCode = () => {
+  isShowingSppiner.value = true
+  setTimeout(() => {
+    isShowingSppiner.value = false
+  }, 3000)
+}
 </script>
 <template>
   <div class="container">
@@ -15,7 +26,7 @@ setInterval(() => {}, 1000)
             <h2>کدتایید</h2>
           </div>
           <div class="form__input">
-            <BaseInput :digit-count="6" />
+            <OTPInputs :digit-count="6" v-model="isActive" />
           </div>
           <div class="form__caption">
             <p>کد ارسال 6 رقمی را اینجا وارد کنید</p>
@@ -23,10 +34,13 @@ setInterval(() => {}, 1000)
         </div>
         <div class="OTP__footer">
           <div class="OTP__timer">
-            <span>زمان باقی مانده ۰۰:۴۶</span>
+            <span> <AppTimer /></span>
           </div>
           <div class="form__submit-btn">
-            <button>ارسال مجدد</button>
+            <button @click="submitCode" :disabled="!isActive">
+              <span> {{ isActive ? 'ارسال' : 'ارسال مجدد' }}</span>
+              <span :class="isShowingSppiner && 'sppiner'"></span>
+            </button>
           </div>
         </div>
       </div>
@@ -118,10 +132,31 @@ setInterval(() => {}, 1000)
       align-items: center;
       gap: 0.75rem;
       border-radius: 0.5rem;
-      opacity: 0.2;
       background-color: #4152a0;
       color: #ffffff;
+      &:disabled {
+        opacity: 0.2;
+      }
     }
+  }
+}
+
+.sppiner {
+  display: flex;
+  width: 17px;
+  height: 17px;
+  border: 2px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>

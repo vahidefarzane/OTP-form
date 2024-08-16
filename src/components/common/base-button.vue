@@ -1,8 +1,6 @@
 <script setup></script>
 <template>
-  <div>
-    <button></button>
-  </div>
+  <div></div>
 </template>
 
 <style></style>
