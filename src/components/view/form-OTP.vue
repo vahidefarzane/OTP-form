@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 // import BaseButton from '../common/base-button.vue'
 import OTPInputs from '../common/OTP-inputs.vue'
 import AppTimer from './app-timer.vue'

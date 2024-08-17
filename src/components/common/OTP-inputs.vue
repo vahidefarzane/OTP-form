@@ -9,16 +9,17 @@ const props = defineProps({
     required: true
   }
 })
-const digits = reactive([])
+const numbers = reactive([])
 const OTPCode = ref([])
+// const isActiveBtn = ref(false)
 
 if (props.default && props.default.length === props.digitCount) {
   for (let i = 0; i < props.digitCount; i++) {
-    digits[i] = props.default.charAt(i)
+    numbers[i] = props.default.charAt(i)
   }
 } else {
   for (let i = 0; i < props.digitCount; i++) {
-    digits[i] = null
+    numbers[i] = null
   }
 }
 const otpCont = ref(null)
@@ -28,7 +29,7 @@ const handleKeyDown = function (event, index) {
   }
 
   if (event.key === 'Backspace') {
-    digits[index] = null
+    numbers[index] = null
 
     if (index > 0) {
       otpCont.value.children[index - 1].focus()
@@ -38,14 +39,14 @@ const handleKeyDown = function (event, index) {
   }
 
   if (new RegExp('^([0-9])$').test(event.key)) {
-    digits[index] = event.key
+    numbers[index] = event.key
 
     if (index != props.digitCount - 1) {
       otpCont.value.children[index + 1].focus()
     }
   }
 
-  OTPCode.value.push(digits[index])
+  OTPCode.value.push(numbers[index])
   if (OTPCode.value.length === 6) {
     isActiveBtn.value = true
   }
@@ -54,9 +55,9 @@ const handleKeyDown = function (event, index) {
 <template>
   <div class="input__wrapper" ref="otpCont">
     <input
-      v-for="(el, ind) in digits"
+      v-for="(el, ind) in numbers"
       :key="el + ind"
-      v-model="digits[ind]"
+      v-model="numbers[ind]"
       :autofocus="ind === 0"
       maxlength="1"
       type="number"
