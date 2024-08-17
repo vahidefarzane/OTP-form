@@ -4,7 +4,8 @@ import { ref } from 'vue'
 import OTPInputs from '../common/OTP-inputs.vue'
 import AppTimer from './app-timer.vue'
 
-const isActive = ref(false)
+const otp = ref('')
+otp.value = ''
 const isShowingSppiner = ref(false)
 
 const submitCode = () => {
@@ -26,7 +27,7 @@ const submitCode = () => {
             <h2>کدتایید</h2>
           </div>
           <div class="form__input">
-            <OTPInputs :digit-count="6" v-model="isActive" />
+            <OTPInputs :digit-count="6" v-model="otp" />
           </div>
           <div class="form__caption">
             <p>کد ارسال 6 رقمی را اینجا وارد کنید</p>

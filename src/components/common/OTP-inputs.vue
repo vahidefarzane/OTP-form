@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive, defineModel } from 'vue'
-const isActiveBtn = defineModel()
+const otp = defineModel()
 
 const props = defineProps({
   default: String,
@@ -48,8 +48,9 @@ const handleKeyDown = function (event, index) {
 
   OTPCode.value.push(numbers[index])
   if (OTPCode.value.length === 6) {
-    isActiveBtn.value = true
+    // isActiveBtn.value = true
   }
+  otp.value = OTPCode.value.join('')
 }
 </script>
 <template>
