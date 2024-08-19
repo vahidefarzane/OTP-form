@@ -1,10 +1,10 @@
 <script setup>
-import formOTP from './components/view/form-OTP.vue'
+import OTPPage from './pages/OTP-page.vue'
 </script>
 
 <template>
   <div class="app">
-    <formOTP />
+    <OTPPage />
   </div>
 </template>
 

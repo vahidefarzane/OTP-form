@@ -70,24 +70,5 @@ const handleKeyDown = function (event, index) {
 </template>
 
 <style lang="scss">
-.input__wrapper {
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  gap: 0.75rem;
-  direction: ltr;
-}
-.input {
-  width: 3.0625rem;
-  height: 3rem;
-  background-color: #f9fafb;
-  border-radius: 0.38rem;
-  display: flex;
-  justify-content: center;
-  align-items: centers;
-  text-align: center;
-  &:focus {
-    border: 1px solid #00aace;
-  }
-}
+@import '../../styles/sass/components/common/otp.scss';
 </style>
