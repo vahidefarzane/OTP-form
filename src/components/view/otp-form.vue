@@ -1,8 +1,6 @@
 <script setup>
-import { ref } from 'vue'
-// import BaseButton from '../common/base-button.vue'
 import OTPInputs from '../common/OTP-inputs.vue'
-import AppTimer from './app-timer.vue'
+import appTimer from './app-timer.vue'
 
 defineProps({
   phoneNumber: {
@@ -29,7 +27,7 @@ defineProps({
         </div>
       </div>
       <div class="otp-form__action-section">
-        <AppTimer />
+        <appTimer duration="20" />
         <div class="otp-form__submit-btn">
           <button @click="submitCode" :disabled="!isActive">
             <span> {{ isActive ? 'ارسال' : 'ارسال مجدد' }}</span>

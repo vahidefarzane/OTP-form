@@ -1,31 +1,51 @@
 <script setup>
-import { onMounted, ref, onUnmounted } from 'vue'
-import { useTimerStore } from '../../stores/timerStore'
+import { ref, computed, onUnmounted, onMounted } from 'vue'
 
-const timerStore = useTimerStore()
-
-// const minutes = ref(2)
-// const secondes = ref(10)
-
-onUnmounted(() => {
-  clearInterval()
+const props = defineProps({
+  duration: {
+    type: Number,
+    default: 180
+  }
 })
-onMounted(() => {
-  startTimer()
+
+const timer = ref(0)
+let interval = null
+
+const formattedTime = computed(() => {
+  const minutes = Math.floor(timer.value / 60)
+  const seconds = timer.value % 60
+  return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
 })
-const startTimer = () => {
-  setInterval(() => {
-    if (timerStore.timer.seconds <= 0) {
-      timerStore.timer.seconds = 0
+const startTimer = (duration) => {
+  if (interval) clearInterval(interval)
+  timer.value = duration
+
+  interval = setInterval(() => {
+    if (timer.value > 0) {
+      timer.value--
     } else {
-      timerStore.timer.seconds--
+      clearInterval(interval)
     }
   }, 1000)
 }
+onUnmounted(() => {
+  if (interval) clearInterval(interval)
+})
+onMounted(() => {
+  startTimer(props.duration)
+})
 </script>
 
 <template>
-  <div>زمان باقی مانده {{ timerStore.timer.seconds - 1 }} :00</div>
+  <span class="timer">زمان باقی مانده {{ formattedTime }}</span>
 </template>
 
-<style></style>
+<style lang="scss" scoped>
+.timer {
+  color: var(--primary-500);
+  font-size: 0.875rem;
+  font-weight: 500;
+
+  line-height: 1.75rem;
+}
+</style>
