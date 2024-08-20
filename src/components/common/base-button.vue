@@ -9,13 +9,16 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false
+  },
+
+  defaultValue: {
+    type: Boolean,
+    default: true
   }
 })
 
-// Define emit events
 const emit = defineEmits(['click'])
 
-// Handle button click
 const handleClick = (event) => {
   if (!props.disabled && !props.loading) {
     emit('click', event)
@@ -30,8 +33,8 @@ const handleClick = (event) => {
   >
     <slot name="pre-icon" />
 
-    <span v-if="!loading">
-      <slot />
+    <span v-if="defaultValue">
+      <slot name="defaultValue" />
     </span>
     <span v-if="loading" class="btn-content">
       <slot name="loading" />

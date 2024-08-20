@@ -17,14 +17,18 @@ defineProps({
 
 const isLoading = ref(false)
 const isDisabled = ref(true)
+const isSubmiting = ref(false)
+const defaultValue = ref(true)
 const startTime = ref(false)
 
 const handleClick = () => {
   isLoading.value = true
+  defaultValue.value = false
   setTimeout(() => {
     isDisabled.value = true
     isLoading.value = false
     startTime.value = true
+    defaultValue.value = true
   }, 3000)
 }
 const handleTimerFinished = () => {
@@ -47,14 +51,16 @@ const handleTimerFinished = () => {
       <div class="otp-form__action-section">
         <appTimer duration="5" @timerFinished="handleTimerFinished" :startTime="startTime" />
         <div class="otp-form__submit-btn">
-          <baseButton :loading="isLoading" :disabled="isDisabled" @click="handleClick">
-            ارسال مجدد
+          <baseButton
+            :loading="isLoading"
+            :disabled="isDisabled"
+            :defaultValue="defaultValue"
+            @click="handleClick"
+          >
+            <template #defaultValue>{{ isSubmiting ? 'ارسال' : 'ارسال مجدد' }} </template>
             <template #loading> در حال ارسال کد ... <span class="sppiner"></span></template>
+            <template #submiting>ارسال</template>
           </baseButton>
-          <!-- <button @click="submitCode" :disabled="!isActive">
-            <span> {{ isActive ? 'ارسال' : 'ارسال مجدد' }}</span>
-            <span :class="isShowingSppiner && 'sppiner'"></span>
-          </button> -->
         </div>
       </div>
     </form>
