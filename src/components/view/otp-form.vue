@@ -3,8 +3,6 @@ import OTPInputs from '../common/OTP-inputs.vue'
 import appTimer from './app-timer.vue'
 import { ref } from 'vue'
 import baseButton from '../common/base-button.vue'
-import { useTimerStore } from '@/stores/timerStore'
-const timerStore = useTimerStore()
 
 defineProps({
   phoneNumber: {
@@ -19,17 +17,18 @@ defineProps({
 
 const isLoading = ref(false)
 const isDisabled = ref(true)
-const durationTimer = ref(5)
-
-timerStore.set(durationTimer)
+const startTime = ref(false)
 
 const handleClick = () => {
   isLoading.value = true
-  setTimeout(() => (isLoading.value = false), 2000)
+  setTimeout(() => {
+    isDisabled.value = true
+    isLoading.value = false
+    startTime.value = true
+  }, 3000)
 }
-
-if (timerStore.timer === 0) {
-  console.log('ok')
+const handleTimerFinished = () => {
+  isDisabled.value = false
 }
 </script>
 <template>
@@ -46,17 +45,11 @@ if (timerStore.timer === 0) {
         </div>
       </div>
       <div class="otp-form__action-section">
-        <appTimer />
+        <appTimer duration="5" @timerFinished="handleTimerFinished" :startTime="startTime" />
         <div class="otp-form__submit-btn">
           <baseButton :loading="isLoading" :disabled="isDisabled" @click="handleClick">
-            <template #pre-icon>
-              <i class="fa fa-spinner" />
-            </template>
             ارسال مجدد
-            <template #post-icon>
-              <i class="fa fa-check" />
-            </template>
-            <template #loading> <i class="fa fa-spinner fa-spin" /> Please wait... </template>
+            <template #loading> در حال ارسال کد ... <span class="sppiner"></span></template>
           </baseButton>
           <!-- <button @click="submitCode" :disabled="!isActive">
             <span> {{ isActive ? 'ارسال' : 'ارسال مجدد' }}</span>

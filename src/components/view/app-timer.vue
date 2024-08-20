@@ -1,17 +1,27 @@
 <script setup>
-import { ref, computed, onUnmounted, onMounted, defineProps } from 'vue'
-import { useTimerStore } from '@/stores/timerStore'
-
-const timerStore = useTimerStore()
+import { ref, computed, onUnmounted, onMounted, watch } from 'vue'
 
 const timer = ref(0)
 let interval = null
+const props = defineProps({
+  duration: {
+    type: Number,
+    default: 10
+  },
+  startTime: {
+    type: Boolean,
+    default: false
+  }
+})
+
+const emit = defineEmits(['timerFinished'])
+
 const formattedTime = computed(() => {
   const minutes = Math.floor(timer.value / 60)
   const seconds = timer.value % 60
   return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
 })
-const startTimer = (duration = timerStore.timer) => {
+const startTimer = (duration) => {
   if (interval) clearInterval(interval)
   timer.value = duration
 
@@ -20,14 +30,23 @@ const startTimer = (duration = timerStore.timer) => {
       timer.value--
     } else {
       clearInterval(interval)
+      emit('timerFinished')
     }
   }, 1000)
 }
+watch(
+  () => props.startTime,
+  (newVal) => {
+    if (newVal) {
+      startTimer(props.duration)
+    }
+  }
+)
 onUnmounted(() => {
   if (interval) clearInterval(interval)
 })
 onMounted(() => {
-  startTimer(timerStore.timer)
+  startTimer(props.duration)
 })
 </script>
 

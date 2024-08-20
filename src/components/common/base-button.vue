@@ -33,8 +33,8 @@ const handleClick = (event) => {
     <span v-if="!loading">
       <slot />
     </span>
-    <span v-else>
-      <slot name="loading">Loading...</slot>
+    <span v-if="loading" class="btn-content">
+      <slot name="loading" />
     </span>
 
     <slot name="post-icon" />
@@ -62,5 +62,10 @@ const handleClick = (event) => {
 .is-disabled {
   cursor: not-allowed;
   opacity: 0.2;
+}
+.btn-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

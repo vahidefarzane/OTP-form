@@ -54,3 +54,22 @@
     }
   }
 }
+
+.sppiner {
+  display: flex;
+  width: 17px;
+  height: 17px;
+  border: 2px solid $color-white;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
