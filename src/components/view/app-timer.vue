@@ -1,22 +1,17 @@
 <script setup>
-import { ref, computed, onUnmounted, onMounted } from 'vue'
+import { ref, computed, onUnmounted, onMounted, defineProps } from 'vue'
+import { useTimerStore } from '@/stores/timerStore'
 
-const props = defineProps({
-  duration: {
-    type: Number,
-    default: 180
-  }
-})
+const timerStore = useTimerStore()
 
 const timer = ref(0)
 let interval = null
-
 const formattedTime = computed(() => {
   const minutes = Math.floor(timer.value / 60)
   const seconds = timer.value % 60
   return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
 })
-const startTimer = (duration) => {
+const startTimer = (duration = timerStore.timer) => {
   if (interval) clearInterval(interval)
   timer.value = duration
 
@@ -32,20 +27,29 @@ onUnmounted(() => {
   if (interval) clearInterval(interval)
 })
 onMounted(() => {
-  startTimer(props.duration)
+  startTimer(timerStore.timer)
 })
 </script>
 
 <template>
-  <span class="timer">زمان باقی مانده {{ formattedTime }}</span>
+  <div class="timer-wrapper">
+    <span class="timer">زمان باقی مانده {{ formattedTime }}</span>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 .timer {
+  &-wrapper {
+    display: flex;
+    height: 3rem;
+    padding: 0.5rem 1rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+  }
   color: var(--primary-500);
   font-size: 0.875rem;
   font-weight: 500;
-
   line-height: 1.75rem;
 }
 </style>

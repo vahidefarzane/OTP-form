@@ -1,18 +1,17 @@
 import { defineStore } from 'pinia'
 export const useTimerStore = defineStore('timer', {
   state: () => ({
-    timer: {
-      seconds: 10,
-      minutes: ''
-    }
+    timer: ''
   }),
   actions: {
-    resetTimer() {
-      this.$patch({ seconds: 0 })
+    set(duration) {
+      this.$patch({ timer: duration })
     }
   },
+
   persist: {
     enabled: true,
+    key: 'timer',
     storage: localStorage
   }
 })
