@@ -13,23 +13,42 @@ const otp = reactive(Array(props.numberOfdigits).fill(''))
 const inputRefs = ref([])
 
 const emitOtpChange = () => {
-  if (!otp.includes('')) {
-    emit('otpChange', otp.join(''))
+  console.log(otp)
+
+  emit('otpChange', otp.join(''))
+}
+const moveToFirstEmptyInput = () => {
+  const firstEmptyIndex = otp.findIndex((digit) => digit === '')
+
+  if (firstEmptyIndex !== -1) {
+    inputRefs.value[firstEmptyIndex].focus()
   }
 }
-
-const onInput = (index) => {
-  if (/^[1-9]$/.test(otp[index])) {
-    if (index < props.numberOfdigits - 1) {
-      inputRefs.value[index + 1].focus()
+const arePreviousInputsFilled = (index) => {
+  for (let i = 0; i < index; i++) {
+    if (otp[i] === '') {
+      return false
     }
+  }
+  return true
+}
+
+const inputHandler = (index) => {
+  if (!arePreviousInputsFilled(index)) {
+    otp[index] = ''
+    moveToFirstEmptyInput()
+    return
+  }
+
+  if (/^[1-9]$/.test(otp[index])) {
+    emitOtpChange()
+    moveToFirstEmptyInput()
   } else {
     otp[index] = ''
   }
-  emitOtpChange()
 }
 
-const onBackspace = (index) => {
+const backspaceHandler = (index) => {
   if (otp[index] === '') {
     if (index > 0) {
       inputRefs.value[index - 1].focus()
@@ -38,7 +57,7 @@ const onBackspace = (index) => {
   emitOtpChange()
 }
 
-const onPaste = (e) => {
+const pasteHandler = (e) => {
   const pasteData = e.clipboardData.getData('text').slice(0, props.numberOfdigits)
   pasteData.split('').forEach((char, index) => {
     if (/^[1-9]$/.test(char)) {
@@ -49,6 +68,7 @@ const onPaste = (e) => {
   const nextIndex =
     pasteData.length < props.numberOfdigits ? pasteData.length : props.numberOfdigits - 1
   inputRefs.value[nextIndex].focus()
+  moveToFirstEmptyInput()
   emitOtpChange()
 }
 
@@ -72,9 +92,9 @@ watch(otp, () => {
       class="otp-input"
       :ref="(el) => (inputRefs[index] = el)"
       v-model="otp[index]"
-      @input="onInput(index)"
-      @keydown.backspace="onBackspace(index)"
-      @paste="onPaste($event)"
+      @input="inputHandler(index)"
+      @keydown.backspace="backspaceHandler(index)"
+      @paste="pasteHandler($event)"
     />
   </div>
 </template>

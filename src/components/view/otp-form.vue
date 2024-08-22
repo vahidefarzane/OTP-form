@@ -34,10 +34,15 @@ const handleClick = () => {
 const handleTimerFinished = () => {
   isDisabled.value = false
 }
-const handleOtpChange = () => {
-  isOtpComplete.value = true
-  isSubmiting.value = true
-  isDisabled.value = false
+const handleOtpChange = (otp) => {
+  isOtpComplete.value = otp.length === 6
+  if (isOtpComplete.value) {
+    isSubmiting.value = true
+    isDisabled.value = false
+  } else {
+    isSubmiting.value = false
+    isDisabled.value = true
+  }
 }
 </script>
 <template>
