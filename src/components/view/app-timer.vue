@@ -1,57 +1,29 @@
 <script setup>
-import { ref, computed, onUnmounted, onMounted, watch } from 'vue'
+import { computed, onUnmounted, onMounted } from 'vue'
+import { useTimerStore } from '@/stores/timerStore'
 
-const timer = ref(0)
-let interval = null
-const props = defineProps({
-  duration: {
-    type: Number,
-    default: 10
-  },
-  startTime: {
-    type: Boolean,
-    default: false
-  }
-})
-
-const emit = defineEmits(['timerFinished'])
+const timerStore = useTimerStore()
 
 const formattedTime = computed(() => {
-  const minutes = Math.floor(timer.value / 60)
-  const seconds = timer.value % 60
+  const minutes = Math.floor(timerStore.timer / 60)
+  const seconds = timerStore.timer % 60
   return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
 })
-const startTimer = (duration) => {
-  if (interval) clearInterval(interval)
-  timer.value = duration
 
-  interval = setInterval(() => {
-    if (timer.value > 0) {
-      timer.value--
-    } else {
-      clearInterval(interval)
-      emit('timerFinished')
-    }
-  }, 1000)
+const startmyTimer = (duration) => {
+  timerStore.startTimer(duration)
 }
-watch(
-  () => props.startTime,
-  (newVal) => {
-    if (newVal) {
-      startTimer(props.duration)
-    }
-  }
-)
 onUnmounted(() => {
-  if (interval) clearInterval(interval)
+  timerStore.stopTimer()
 })
 onMounted(() => {
-  startTimer(props.duration)
+  timerStore.loadTimerState()
 })
 </script>
 
 <template>
   <div class="timer-wrapper">
+    <button @click.prevent="startmyTimer(5)">start</button>
     <span class="timer">زمان باقی مانده {{ formattedTime }}</span>
   </div>
 </template>

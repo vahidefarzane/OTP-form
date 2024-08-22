@@ -1,8 +1,11 @@
 <script setup>
 import appTimer from './app-timer.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import baseButton from '../common/base-button.vue'
 import otpInputs from './otp-inputs.vue'
+import { useTimerStore } from '@/stores/timerStore'
+
+const timerStore = useTimerStore()
 
 defineProps({
   phoneNumber: {
@@ -16,7 +19,9 @@ defineProps({
 })
 
 const isLoading = ref(false)
-const isDisabled = ref(true)
+const isDisabled = computed(() => {
+  return timerStore.timer !== 0
+})
 const isOtpComplete = ref(false)
 const isSubmiting = ref(false)
 const startTime = ref(false)
@@ -25,15 +30,13 @@ const handleClick = () => {
   isLoading.value = true
   isSubmiting.value = false
   setTimeout(() => {
-    isDisabled.value = true
+    timerStore.startTimer(5)
     isLoading.value = false
     startTime.value = true
     isSubmiting.value = false
   }, 3000)
 }
-const handleTimerFinished = () => {
-  isDisabled.value = false
-}
+
 const handleOtpChange = (otp) => {
   isOtpComplete.value = otp.length === 6
   if (isOtpComplete.value) {
@@ -43,6 +46,10 @@ const handleOtpChange = (otp) => {
     isSubmiting.value = false
     isDisabled.value = true
   }
+}
+const timer = computed(() => timerStore.timer)
+if (timer.value === 0) {
+  isDisabled.value = false
 }
 </script>
 <template>
@@ -59,7 +66,7 @@ const handleOtpChange = (otp) => {
         </div>
       </div>
       <div class="otp-form__action-section">
-        <appTimer duration="10" @timerFinished="handleTimerFinished" :startTime="startTime" />
+        <appTimer />
         <div class="otp-form__submit-btn">
           <baseButton
             :loading="isLoading"

@@ -1,10 +1,10 @@
 <script setup>
-import OTPPage from './pages/OTP-page.vue'
+import otpPage from './pages/otp-page.vue'
 </script>
 
 <template>
   <div class="app">
-    <OTPPage />
+    <otpPage />
   </div>
 </template>
 
