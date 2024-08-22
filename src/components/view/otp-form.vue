@@ -1,8 +1,8 @@
 <script setup>
-import OTPInputs from '../common/OTP-inputs.vue'
 import appTimer from './app-timer.vue'
 import { ref } from 'vue'
 import baseButton from '../common/base-button.vue'
+import otpInputs from './otp-inputs.vue'
 
 defineProps({
   phoneNumber: {
@@ -17,21 +17,26 @@ defineProps({
 
 const isLoading = ref(false)
 const isDisabled = ref(true)
+const isOtpComplete = ref(false)
 const isSubmiting = ref(false)
-const defaultValue = ref(true)
 const startTime = ref(false)
 
 const handleClick = () => {
   isLoading.value = true
-  defaultValue.value = false
+  isSubmiting.value = false
   setTimeout(() => {
     isDisabled.value = true
     isLoading.value = false
     startTime.value = true
-    defaultValue.value = true
+    isSubmiting.value = false
   }, 3000)
 }
 const handleTimerFinished = () => {
+  isDisabled.value = false
+}
+const handleOtpChange = () => {
+  isOtpComplete.value = true
+  isSubmiting.value = true
   isDisabled.value = false
 }
 </script>
@@ -42,24 +47,24 @@ const handleTimerFinished = () => {
         <h1 class="otp-form__title">کد تایید برای شماره {{ phoneNumber }} ارسال شد</h1>
         <div class="otp-form__input-group input-group">
           <h2 class="input-group__label">کدتایید</h2>
-          <div class="input-group__input">
-            <OTPInputs :digit-count="6" v-model="otp" />
+          <div class="input-group__inputs">
+            <otpInputs :numberOfdigits="6" @otpChange="handleOtpChange" />
           </div>
           <p class="input-group__caption">کد ارسال {{ OTPCount }} رقمی را اینجا وارد کنید</p>
         </div>
       </div>
       <div class="otp-form__action-section">
-        <appTimer duration="5" @timerFinished="handleTimerFinished" :startTime="startTime" />
+        <appTimer duration="10" @timerFinished="handleTimerFinished" :startTime="startTime" />
         <div class="otp-form__submit-btn">
           <baseButton
             :loading="isLoading"
             :disabled="isDisabled"
-            :defaultValue="defaultValue"
+            :submitting="isSubmiting"
             @click="handleClick"
           >
-            <template #defaultValue>{{ isSubmiting ? 'ارسال' : 'ارسال مجدد' }} </template>
+            ارسال مجدد
+            <template #submitting>ارسال</template>
             <template #loading> در حال ارسال کد ... <span class="sppiner"></span></template>
-            <template #submiting>ارسال</template>
           </baseButton>
         </div>
       </div>

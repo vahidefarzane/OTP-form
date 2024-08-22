@@ -11,9 +11,9 @@ const props = defineProps({
     default: false
   },
 
-  defaultValue: {
+  submitting: {
     type: Boolean,
-    default: true
+    default: false
   }
 })
 
@@ -33,8 +33,11 @@ const handleClick = (event) => {
   >
     <slot name="pre-icon" />
 
-    <span v-if="defaultValue">
-      <slot name="defaultValue" />
+    <span v-if="!submitting && !loading">
+      <slot />
+    </span>
+    <span v-if="submitting">
+      <slot name="submitting" />
     </span>
     <span v-if="loading" class="btn-content">
       <slot name="loading" />

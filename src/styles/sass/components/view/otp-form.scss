@@ -44,7 +44,10 @@
       font-size: 1rem;
       font-weight: 400;
     }
-    &__input {
+    &__inputs {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     &__caption {
       color: var(--secondary-200);
