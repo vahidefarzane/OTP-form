@@ -10,8 +10,8 @@ const formattedTime = computed(() => {
   return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
 })
 
-const startmyTimer = (duration) => {
-  timerStore.startTimer(duration)
+const startmyTimer = () => {
+  timerStore.startTimer()
 }
 onUnmounted(() => {
   timerStore.stopTimer()
@@ -23,7 +23,7 @@ onMounted(() => {
 
 <template>
   <div class="timer-wrapper">
-    <button @click.prevent="startmyTimer(5)">start</button>
+    <button @click.prevent="startmyTimer()">start</button>
     <span class="timer">زمان باقی مانده {{ formattedTime }}</span>
   </div>
 </template>

@@ -13,8 +13,6 @@ const otp = reactive(Array(props.numberOfdigits).fill(''))
 const inputRefs = ref([])
 
 const emitOtpChange = () => {
-  console.log(otp)
-
   emit('otpChange', otp.join(''))
 }
 const moveToFirstEmptyInput = () => {
@@ -57,8 +55,8 @@ const backspaceHandler = (index) => {
   emitOtpChange()
 }
 
-const pasteHandler = (e) => {
-  const pasteData = e.clipboardData.getData('text').slice(0, props.numberOfdigits)
+const pasteHandler = (event) => {
+  const pasteData = event.clipboardData.getData('text').slice(0, props.numberOfdigits)
   pasteData.split('').forEach((char, index) => {
     if (/^[1-9]$/.test(char)) {
       otp[index] = char
@@ -94,7 +92,7 @@ watch(otp, () => {
       v-model="otp[index]"
       @input="inputHandler(index)"
       @keydown.backspace="backspaceHandler(index)"
-      @paste="pasteHandler($event)"
+      @paste="pasteHandler(event)"
     />
   </div>
 </template>

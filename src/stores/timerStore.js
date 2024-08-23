@@ -3,11 +3,11 @@ import { defineStore } from 'pinia'
 
 export const useTimerStore = defineStore('timer', {
   state: () => ({
-    timer: 0,
+    timer: 10,
     intervalId: null
   }),
   actions: {
-    startTimer(duration) {
+    startTimer(duration = 10) {
       this.timer = duration
       this.intervalId = setInterval(() => {
         if (this.timer > 0) {

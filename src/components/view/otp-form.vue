@@ -20,7 +20,7 @@ defineProps({
 
 const isLoading = ref(false)
 const isDisabled = computed(() => {
-  return timerStore.timer !== 0
+  return timerStore.timer !== 0 && isSubmiting.value === false
 })
 const isOtpComplete = ref(false)
 const isSubmiting = ref(false)
@@ -30,7 +30,7 @@ const handleClick = () => {
   isLoading.value = true
   isSubmiting.value = false
   setTimeout(() => {
-    timerStore.startTimer(5)
+    timerStore.startTimer()
     isLoading.value = false
     startTime.value = true
     isSubmiting.value = false

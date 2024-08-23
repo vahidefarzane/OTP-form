@@ -69,9 +69,4 @@ const handleClick = (event) => {
   cursor: not-allowed;
   opacity: 0.2;
 }
-.btn-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 </style>
