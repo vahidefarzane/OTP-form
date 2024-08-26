@@ -2,6 +2,13 @@
 import { computed, onUnmounted, onMounted } from 'vue'
 import { useTimerStore } from '@/stores/timerStore'
 
+const props = defineProps({
+  timeInSecond: {
+    type: Number,
+    default: 120
+  }
+})
+
 const timerStore = useTimerStore()
 
 const formattedTime = computed(() => {
@@ -14,8 +21,8 @@ onUnmounted(() => {
   timerStore.stopTimer()
 })
 onMounted(() => {
-  if (timerStore.isRunning === false) {
-    timerStore.startTimer()
+  if (!timerStore.isRunning) {
+    timerStore.startTimer(props.timeInSecond)
   } else {
     timerStore.resumeTimer()
   }

@@ -19,6 +19,7 @@ defineProps({
   }
 })
 
+const timeInSecond = 12
 const isLoading = ref(false)
 const isDisabled = computed(() => {
   return timerStore.timer !== 0 && isSubmiting.value === false
@@ -37,7 +38,7 @@ const handleClick = () => {
     isLoading.value = true
     isSubmiting.value = false
     setTimeout(() => {
-      timerStore.startTimer()
+      timerStore.startTimer(timeInSecond)
       isLoading.value = false
       isSubmiting.value = false
     }, 3000)
@@ -48,7 +49,6 @@ const handleOtpChange = (otp) => {
   isOtpComplete.value = otp.length === 6
   if (isOtpComplete.value) {
     isSubmiting.value = true
-    console.log(isSubmiting.value)
 
     isDisabled.value = false
   } else {
@@ -75,7 +75,7 @@ if (timer.value === 0) {
         </div>
       </div>
       <div class="otp-form__action-section">
-        <appTimer />
+        <appTimer :timeInSecond="timeInSecond" />
         <baseButton
           class="otp-form__submit-btn primary"
           :loading="isLoading"
