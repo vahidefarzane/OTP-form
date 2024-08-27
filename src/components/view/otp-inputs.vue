@@ -55,7 +55,7 @@ const backspaceHandler = (index) => {
   emitOtpChange()
 }
 
-const pasteHandler = (event) => {
+const pasteHandler = () => {
   const pasteData = event.clipboardData.getData('text').slice(0, props.numberOfdigits)
   pasteData.split('').forEach((char, index) => {
     if (/^[1-9]$/.test(char)) {
