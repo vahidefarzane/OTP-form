@@ -9,6 +9,7 @@ export const useTimerStore = defineStore('timer', {
   }),
   actions: {
     startTimer(duration) {
+      this.stopTimer()
       this.timer = duration
       this.isRunning = true
       this.intervalId = setInterval(() => {
@@ -20,13 +21,22 @@ export const useTimerStore = defineStore('timer', {
       }, 1000)
     },
     stopTimer() {
-      clearInterval(this.intervalId)
+      if (this.intervalId) {
+        clearInterval(this.intervalId)
+        this.intervalId = null
+      }
       this.isRunning = false
-      this.intervalId = null
     },
     resumeTimer() {
       if (this.isRunning && this.timer > 0) {
-        this.startTimer(this.timer)
+        this.isRunning = true
+        this.intervalId = setInterval(() => {
+          if (this.timer > 0) {
+            this.timer--
+          } else {
+            this.stopTimer()
+          }
+        }, 1000)
       }
     }
   },
