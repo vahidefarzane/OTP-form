@@ -3,6 +3,9 @@
 ## 🚀 Project Overview
 
 This project is a Vue 3 application that features a One-Time Password (OTP) code form. The form includes a countdown timer that resets if the OTP code is not entered in time. The timer's state is managed using Pinia, and the UI is styled with Sass.
+## 🌐 Live Demo
+
+Check out the live demo of the project [here](https://otp-form-teal.vercel.app).
 
 ## 🛠️ Technologies Used
 
@@ -68,9 +71,6 @@ Here’s what the OTP form looks like:
 
 
 <img src="./src/assets/images/otp-form-1.png" alt="Screenshot of OTP Form" width="400"/>
-<img src="./src/assets/images/otp-form-2.png" alt="Screenshot of OTP Form" width="400"/>
-<img src="./src/assets/images/otp-form-3.png" alt="Screenshot of OTP Form" width="400"/>
+<img src="./src/assets/images/otp-form-2.png" alt="Screenshot of OTP Form" width="150"/>
+<img src="./src/assets/images/otp-form-3.png" alt="Screenshot of OTP Form" width="150"/>
 
-<!-- ![OTP Form 1](./src/assets/images/otp-form-1.png)
-![OTP Form 2](./src/assets/images/otp-form-2.png)
-![OTP Form 3](./src/assets/images/otp-form-3.png) -->
