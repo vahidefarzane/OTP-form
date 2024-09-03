@@ -27,7 +27,7 @@ const handleClick = (event) => {
 </script>
 <template>
   <button
-    :class="['button', { 'is-loading': loading, 'is-disabled': disabled }]"
+    :class="['button', { loading: loading, disabled: disabled }]"
     @click="handleClick"
     :disabled="disabled || loading"
   >
@@ -40,7 +40,7 @@ const handleClick = (event) => {
     </span>
     <span v-if="loading" class="button__loading">
       <slot name="loading" />
-      <span class="sppiner"></span>
+      <span class="button__spinner"></span>
     </span>
     <slot name="post-icon" />
   </button>
@@ -52,6 +52,16 @@ const handleClick = (event) => {
   &__loading {
     @include flex-box(row, center, center, 0.25rem);
   }
+  &__spinner {
+    display: flex;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid var(--color-white);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
 }
 .primary {
   background-color: var(--primary-500);
@@ -61,23 +71,14 @@ const handleClick = (event) => {
   background-color: var(--primary-50);
   color: var(--black-500);
 }
-.is-loading {
+.loading {
   cursor: wait;
 }
-.is-disabled {
+.disabled {
   cursor: not-allowed;
   opacity: 0.2;
 }
-.sppiner {
-  display: flex;
-  width: 1rem;
-  height: 1rem;
-  border: 2px solid var(--color-white);
-  border-bottom-color: transparent;
-  border-radius: 50%;
-  box-sizing: border-box;
-  animation: rotation 1s linear infinite;
-}
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);
