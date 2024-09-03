@@ -66,6 +66,11 @@ npm run build
 
 Here’s what the OTP form looks like:
 
-![OTP Form 1](./src/assets/images/otp-form-1.png)
+
+<img src="./src/assets/images/otp-form-1.png" alt="Screenshot of OTP Form" width="400"/>
+<img src="./src/assets/images/otp-form-2.png" alt="Screenshot of OTP Form" width="400"/>
+<img src="./src/assets/images/otp-form-3.png" alt="Screenshot of OTP Form" width="400"/>
+
+<!-- ![OTP Form 1](./src/assets/images/otp-form-1.png)
 ![OTP Form 2](./src/assets/images/otp-form-2.png)
-![OTP Form 3](./src/assets/images/otp-form-3.png)
+![OTP Form 3](./src/assets/images/otp-form-3.png) -->
