@@ -4,7 +4,6 @@ import { computed, ref } from 'vue'
 import baseButton from '@/components/common/base-button.vue'
 import otpInputs from './otp-inputs.vue'
 import { useTimerStore } from '@/stores/timerStore'
-import router from '@/router'
 
 const timerStore = useTimerStore()
 
@@ -32,7 +31,6 @@ const handleClick = () => {
   if (isSubmitting.value) {
     setTimeout(() => {
       isLoading.value = false
-      router.push('login')
     }, 2000)
   } else {
     setTimeout(() => {
